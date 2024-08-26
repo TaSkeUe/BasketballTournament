@@ -1,0 +1,15 @@
+E:\Zadatak za praksu\BasketballTournament\bin\Debug\net7.0\BasketballTournament.exe
+E:\Zadatak za praksu\BasketballTournament\bin\Debug\net7.0\BasketballTournament.deps.json
+E:\Zadatak za praksu\BasketballTournament\bin\Debug\net7.0\BasketballTournament.runtimeconfig.json
+E:\Zadatak za praksu\BasketballTournament\bin\Debug\net7.0\BasketballTournament.dll
+E:\Zadatak za praksu\BasketballTournament\bin\Debug\net7.0\BasketballTournament.pdb
+E:\Zadatak za praksu\BasketballTournament\obj\Debug\net7.0\BasketballTournament.csproj.AssemblyReference.cache
+E:\Zadatak za praksu\BasketballTournament\obj\Debug\net7.0\BasketballTournament.GeneratedMSBuildEditorConfig.editorconfig
+E:\Zadatak za praksu\BasketballTournament\obj\Debug\net7.0\BasketballTournament.AssemblyInfoInputs.cache
+E:\Zadatak za praksu\BasketballTournament\obj\Debug\net7.0\BasketballTournament.AssemblyInfo.cs
+E:\Zadatak za praksu\BasketballTournament\obj\Debug\net7.0\BasketballTournament.csproj.CoreCompileInputs.cache
+E:\Zadatak za praksu\BasketballTournament\obj\Debug\net7.0\BasketballTournament.dll
+E:\Zadatak za praksu\BasketballTournament\obj\Debug\net7.0\refint\BasketballTournament.dll
+E:\Zadatak za praksu\BasketballTournament\obj\Debug\net7.0\BasketballTournament.pdb
+E:\Zadatak za praksu\BasketballTournament\obj\Debug\net7.0\BasketballTournament.genruntimeconfig.cache
+E:\Zadatak za praksu\BasketballTournament\obj\Debug\net7.0\ref\BasketballTournament.dll
