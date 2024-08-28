@@ -13,3 +13,5 @@ E:\Zadatak za praksu\BasketballTournament\obj\Debug\net7.0\refint\BasketballTour
 E:\Zadatak za praksu\BasketballTournament\obj\Debug\net7.0\BasketballTournament.pdb
 E:\Zadatak za praksu\BasketballTournament\obj\Debug\net7.0\BasketballTournament.genruntimeconfig.cache
 E:\Zadatak za praksu\BasketballTournament\obj\Debug\net7.0\ref\BasketballTournament.dll
+E:\Zadatak za praksu\BasketballTournament\bin\Debug\net7.0\Newtonsoft.Json.dll
+E:\Zadatak za praksu\BasketballTournament\obj\Debug\net7.0\BasketballTournament.csproj.CopyComplete

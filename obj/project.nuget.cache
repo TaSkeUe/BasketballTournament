@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "kgSNCbvLBD55OoSDAgh4Dw8qm6R4C+DawsVDYZ/ABntUCbjjClApPJIdz449MBA6GnkV7hCdJWHVkhwC4EzIVw==",
+  "dgSpecHash": "nRpbcU0rOdWTd5o1z4aYngZ9jdkCBX3JZ686phwEike2ShJabFwJfh5A9uACCmZROBiLhfkjwW3H0UyxGST8bg==",
   "success": true,
   "projectFilePath": "E:\\Zadatak za praksu\\BasketballTournament\\BasketballTournament.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\akac0\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }
