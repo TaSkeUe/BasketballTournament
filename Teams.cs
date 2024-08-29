@@ -3,6 +3,7 @@ public class Teams
     public string Team { get; set; } = string.Empty;
     public string ISOCode { get; set; } = string.Empty;
     public int FIBARanking { get; set; }
+    public int Score { get; set; }
 }
 
 public class GroupsData

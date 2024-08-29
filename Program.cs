@@ -41,6 +41,9 @@ public class Program
             // Ispis šešira i žreba
             DrawPrinter.PrintSeeds(seeds);
             DrawPrinter.PrintQuarterfinals(quarterfinals);
+
+            //Formiranje i ispis eliminacione faze 
+            MatchSimulator.SimulateEliminationPhase(quarterfinals);
         }
         else
         {

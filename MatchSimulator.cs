@@ -49,79 +49,139 @@ public static class MatchSimulator{
     }
 
     public static List<TeamStats> RankTeams(Dictionary<string, List<MatchResult>> matchResults, Dictionary<string, List<Teams>> groups)
-{
-    var allTeams = new List<TeamStats>();
-
-    foreach (var group in groups)
     {
-        var teamStats = new List<TeamStats>();
+        var allTeams = new List<TeamStats>();
 
-        foreach (var team in group.Value)
+        foreach (var group in groups)
         {
-            var stats = new TeamStats { Team = team.Team };
+            var teamStats = new List<TeamStats>();
 
-            foreach (var match in matchResults[group.Key])
+            foreach (var team in group.Value)
             {
-                if (match.Team1 == team.Team)
-                {
-                    stats.PointsFor += match.Team1Score;
-                    stats.PointsAgainst += match.Team2Score;
+                var stats = new TeamStats { Team = team.Team };
 
-                    if (match.Team1Score > match.Team2Score)
+                foreach (var match in matchResults[group.Key])
+                {
+                    if (match.Team1 == team.Team)
                     {
-                        stats.Wins++;
-                        stats.Points += 2;
+                        stats.PointsFor += match.Team1Score;
+                        stats.PointsAgainst += match.Team2Score;
+
+                        if (match.Team1Score > match.Team2Score)
+                        {
+                            stats.Wins++;
+                            stats.Points += 2;
+                        }
+                        else
+                        {
+                            stats.Losses++;
+                            stats.Points += 1;
+                        }
                     }
-                    else
+                    else if (match.Team2 == team.Team)
                     {
-                        stats.Losses++;
-                        stats.Points += 1;
+                        stats.PointsFor += match.Team2Score;
+                        stats.PointsAgainst += match.Team1Score;
+
+                        if (match.Team2Score > match.Team1Score)
+                        {
+                            stats.Wins++;
+                            stats.Points += 2;
+                        }
+                        else
+                        {
+                            stats.Losses++;
+                            stats.Points += 1;
+                        }
                     }
                 }
-                else if (match.Team2 == team.Team)
-                {
-                    stats.PointsFor += match.Team2Score;
-                    stats.PointsAgainst += match.Team1Score;
 
-                    if (match.Team2Score > match.Team1Score)
-                    {
-                        stats.Wins++;
-                        stats.Points += 2;
-                    }
-                    else
-                    {
-                        stats.Losses++;
-                        stats.Points += 1;
-                    }
-                }
+                stats.PointDifference = stats.PointsFor - stats.PointsAgainst;
+                teamStats.Add(stats);
             }
 
-            stats.PointDifference = stats.PointsFor - stats.PointsAgainst;
-            teamStats.Add(stats);
+            var rankedTeams = teamStats.OrderByDescending(t => t.Points)
+                                    .ThenByDescending(t => t.PointDifference)
+                                    .ThenByDescending(t => t.PointsFor)
+                                    .ToList();
+
+            allTeams.AddRange(rankedTeams);
         }
 
-        var rankedTeams = teamStats.OrderByDescending(t => t.Points)
-                                   .ThenByDescending(t => t.PointDifference)
-                                   .ThenByDescending(t => t.PointsFor)
-                                   .ToList();
+        // Rangiranje timova po grupama
+        var topTeams = allTeams.Where(t => t.Points > 0).ToList();
+        var sortedTeams = topTeams.OrderByDescending(t => t.Points)
+                                .ThenByDescending(t => t.PointDifference)
+                                .ThenByDescending(t => t.PointsFor)
+                                .ToList();
 
-        allTeams.AddRange(rankedTeams);
+        // Dodela rangova
+        for (int i = 0; i < sortedTeams.Count; i++)
+        {
+            sortedTeams[i].Rank = i + 1;
+        }
+
+        return sortedTeams;
     }
 
-    // Rank teams across all groups
-    var topTeams = allTeams.Where(t => t.Points > 0).ToList();
-    var sortedTeams = topTeams.OrderByDescending(t => t.Points)
-                               .ThenByDescending(t => t.PointDifference)
-                               .ThenByDescending(t => t.PointsFor)
-                               .ToList();
-
-    // Assign ranks
-    for (int i = 0; i < sortedTeams.Count; i++)
+    public static void SimulateEliminationPhase(List<(Teams, Teams)> quarterfinals)
     {
-        sortedTeams[i].Rank = i + 1;
+        var random = new Random();
+
+        // Cetvrtfinale
+        Console.WriteLine("Četvrtfinale:");
+        var semifinalists = new List<Teams>();
+
+        foreach (var match in quarterfinals)
+        {
+            var winner = SimulateMatch(match.Item1, match.Item2);
+            Console.WriteLine($"    {match.Item1.Team} - {match.Item2.Team} ({match.Item1.Score}:{match.Item2.Score})");
+            semifinalists.Add(winner);
+        }
+
+        Console.WriteLine();
+
+        // Polufinale
+        Console.WriteLine("Polufinale:");
+        var finalists = new List<Teams>();
+        var thirdPlaceContenders = new List<Teams>();
+
+        for (int i = 0; i < semifinalists.Count; i += 2)
+        {
+            var winner = SimulateMatch(semifinalists[i], semifinalists[i + 1]);
+            Console.WriteLine($"    {semifinalists[i].Team} - {semifinalists[i + 1].Team} ({semifinalists[i].Score}:{semifinalists[i + 1].Score})");
+            finalists.Add(winner);
+            thirdPlaceContenders.Add(semifinalists[i] == winner ? semifinalists[i + 1] : semifinalists[i]);
+        }
+
+        Console.WriteLine();
+
+        // Za trece mesto
+        Console.WriteLine("Utakmica za treće mesto:");
+        var thirdPlaceWinner = SimulateMatch(thirdPlaceContenders[0], thirdPlaceContenders[1]);
+        Console.WriteLine($"    {thirdPlaceContenders[0].Team} - {thirdPlaceContenders[1].Team} ({thirdPlaceContenders[0].Score}:{thirdPlaceContenders[1].Score})");
+
+        Console.WriteLine();
+
+        // Finale
+        Console.WriteLine("Finale:");
+        var champion = SimulateMatch(finalists[0], finalists[1]);
+        Console.WriteLine($"    {finalists[0].Team} - {finalists[1].Team} ({finalists[0].Score}:{finalists[1].Score})");
+
+        Console.WriteLine();
+
+        // Dodela medalja
+        Console.WriteLine("Medalje:");
+        Console.WriteLine($"    1. {champion.Team}");
+        Console.WriteLine($"    2. {(finalists[0] == champion ? finalists[1].Team : finalists[0].Team)}");
+        Console.WriteLine($"    3. {thirdPlaceWinner.Team}");
     }
 
-    return sortedTeams;
-}
-
+    private static Teams SimulateMatch(Teams team1, Teams team2)
+    {
+        team1.Score = new Random().Next(60, 100);
+        team2.Score = new Random().Next(60, 100);
+    
+        return team1.Score > team2.Score ? team1 : team2;
+    }
 }
